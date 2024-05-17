@@ -6,7 +6,9 @@ networks:
 services:
   argusdb:
     container_name: argus-db
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlserver
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password123
