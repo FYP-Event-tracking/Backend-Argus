@@ -1,0 +1,33 @@
+version: '3.8'
+
+networks:
+  backend:
+
+services:
+  argusdb:
+    container_name: argus-db
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123
+    networks:
+      - backend
+    ports:
+      - 8001:1433
+
+  userapi:
+    container_name: user-api
+    image: user-api
+    build:
+      context: .
+    networks:
+      - backend
+    ports:
+      - 8002:8080
+    environment: 
+      - DB_HOST=argusdb
+      - USER_DB_NAME=userdb
+      - LOG_DB_NAME=logdb
+      - DB_SA_PASSWORD=Password123
