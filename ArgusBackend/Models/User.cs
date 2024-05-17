@@ -3,24 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArgusBackend.Models
 {
-    [Table("user", Schema = "dbo")]
+    [Table("userdata", Schema ="dbo")]
     public class User
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("user_id")]
+        [Column("userId")]
         public string UserId { get; set; }
 
-        [Column("user_name")]
+        [Column("userName")]
         public string UserName { get; set; }
 
-        [Column("user_type")]
+        [Column("userType")]
         public string UserType { get; set; }
 
-        [Column("user_address")]
+        [Column("userAddress")]
         public string UserAddress { get; set; }
         
-        [Column("user_telephone")]
+        [Column("userTelephone")]
         public string UserTelephone { get; set; }
     }
 }

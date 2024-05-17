@@ -28,5 +28,6 @@ services:
       - 8002:8080
     environment: 
       - DB_HOST=argusdb
-      - DB_NAME=userdb
+      - USER_DB_NAME=userdb
+      - LOG_DB_NAME=logdb
       - DB_SA_PASSWORD=Password123

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace ArgusBackend
 {
-    public class ArgusDbContext : DbContext
+    public class UserDbContext : DbContext
     {
-        public ArgusDbContext(DbContextOptions<ArgusDbContext> options) : base(options)
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
         {
             try
                 {
@@ -29,7 +29,33 @@ namespace ArgusBackend
                     Console.WriteLine(ex.Message);
                 }
         }
-
         public DbSet<User> Users { get; set; }
+    }
+
+    public class LogDbContext : DbContext
+    {
+        public LogDbContext(DbContextOptions<LogDbContext> options) : base(options)
+        {
+            try
+                {
+                    var databaseCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+                    if (databaseCreator != null)
+                    {
+                        if (!databaseCreator.CanConnect())
+                        {
+                            databaseCreator.Create();
+                        }
+                        if (!databaseCreator.HasTables())
+                        {
+                            databaseCreator.CreateTables();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+        }
+        public DbSet<Log> Logs { get; set; }
     }
 }

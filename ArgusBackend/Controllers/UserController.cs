@@ -8,48 +8,48 @@ namespace ArgusBackend.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ArgusDbContext _argusDbContext;
+        private readonly UserDbContext _userDbContext;
 
-        public UserController(ArgusDbContext argusDbContext)
+        public UserController(UserDbContext userDbContext)
         {
-            _argusDbContext = argusDbContext;
+            _userDbContext = userDbContext;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetUsers()
         {
-            return _argusDbContext.Users;
+            return _userDbContext.Users;
         }
 
-        [HttpGet("{userId:int}")]
-        public async Task<ActionResult<User>> GetById(int customerId)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<User>> GetById(string userId)
         {
-            var user = await _argusDbContext.Users.FindAsync(customerId);
+            var user = await _userDbContext.Users.FindAsync(userId);
             return user;
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> Create(User user)
         {
-            await _argusDbContext.Users.AddAsync(user);
-            await _argusDbContext.SaveChangesAsync();
+            await _userDbContext.Users.AddAsync(user);
+            await _userDbContext.SaveChangesAsync();
             return Ok();
         }
 
         [HttpPut]
         public async Task<ActionResult<User>> Update(User user)
         {
-            _argusDbContext.Users.Update(user);
-            await _argusDbContext.SaveChangesAsync();
+            _userDbContext.Users.Update(user);
+            await _userDbContext.SaveChangesAsync();
             return Ok();
         }
 
-        [HttpDelete("{userId:int}")]
-        public async Task<ActionResult<User>> Delete(int userId)
+        [HttpDelete("{userId}")]
+        public async Task<ActionResult<User>> Delete(string userId)
         {
-            var user = await _argusDbContext.Users.FindAsync(userId);
-            _argusDbContext.Users.Remove(user);
-            await _argusDbContext.SaveChangesAsync();
+            var user = await _userDbContext.Users.FindAsync(userId);
+            _userDbContext.Users.Remove(user);
+            await _userDbContext.SaveChangesAsync();
             return Ok();
         }
     }

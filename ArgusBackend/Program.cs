@@ -12,10 +12,13 @@ builder.Services.AddSwaggerGen();
 
 //Database Cotext Dependency Injection
 var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var userDbName = Environment.GetEnvironmentVariable("USER_DB_NAME");
+var logDbName = Environment.GetEnvironmentVariable("LOG_DB_NAME");
 var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true;";
-builder.Services.AddDbContext<ArgusDbContext>(options => options.UseSqlServer(connectionString));
+var userConnectionString = $"Data Source={dbHost};Initial Catalog={userDbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true;";
+var logConnectionString = $"Data Source={dbHost};Initial Catalog={logDbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true;";
+builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlServer(userConnectionString));
+builder.Services.AddDbContext<LogDbContext>(options => options.UseSqlServer(logConnectionString));
 
 var app = builder.Build();
 
