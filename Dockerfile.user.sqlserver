@@ -1,0 +1,10 @@
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=Password123
+
+COPY queries-user.sql /usr/src/app/queries-user.sql
+
+COPY entrypoint-user.sh /usr/src/app/entrypoint-user.sh
+
+CMD ["bash", "/usr/src/app/entrypoint-user.sh"]

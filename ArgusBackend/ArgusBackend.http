@@ -1,6 +1,0 @@
-@ArgusBackend_HostAddress = http://localhost:5220
-
-GET {{ArgusBackend_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
