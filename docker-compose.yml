@@ -18,8 +18,8 @@ services:
       - 8001:1433
 
   userapi:
-    container_name: user-api
-    image: user-api
+    container_name: backend-api
+    image: backend-api
     build:
       context: .
     networks:
@@ -31,3 +31,15 @@ services:
       - USER_DB_NAME=userdb
       - LOG_DB_NAME=logdb
       - DB_SA_PASSWORD=Password123
+    depends_on:
+      - tcsystemapi
+
+  tcsystemapi:
+    container_name: tcsystem-api
+    image: tcsystem-api
+    build:
+      context: ./TCSystem
+    networks:
+      - backend
+    ports:
+      - 8003:8003

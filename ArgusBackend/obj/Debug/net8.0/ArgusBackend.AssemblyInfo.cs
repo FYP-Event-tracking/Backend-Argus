@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ArgusBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b5f1f7f43caeb4ef879a5e17eba9b620336c4e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef71dd61bb1a687d45ac3796f80df977e0f876d3")]
 [assembly: System.Reflection.AssemblyProductAttribute("ArgusBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ArgusBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
