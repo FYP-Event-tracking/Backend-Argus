@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Log_Management_Service-ArgusBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c469aa9f8106f6989dd3d247020b22d483d46b1d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa194b0bed1a04ce1f096b3d6dacd7309a11abb6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Log_Management_Service-ArgusBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Log_Management_Service-ArgusBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

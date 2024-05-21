@@ -5,7 +5,6 @@ ENV SA_PASSWORD=Password123
 
 COPY queries-log.sql /usr/src/app/queries-log.sql
 
-# Entry point script
 COPY entrypoint-log.sh /usr/src/app/entrypoint-log.sh
 
 CMD ["bash", "/usr/src/app/entrypoint-log.sh"]

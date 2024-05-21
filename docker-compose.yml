@@ -7,7 +7,7 @@ services:
   userdb-host:
     container_name: userdb-host
     build:
-      context: .
+      context: ./User_Management_service
       dockerfile: Dockerfile.user.sqlserver
     environment:
       - ACCEPT_EULA=Y
@@ -20,7 +20,7 @@ services:
   logdb-host:
     container_name: logdb-host
     build:
-      context: .
+      context: ./Log_Management_service
       dockerfile: Dockerfile.log.sqlserver
     environment:
       - ACCEPT_EULA=Y
@@ -34,7 +34,7 @@ services:
     container_name: user-service-api
     image: user-service-api
     build:
-      context: .
+      context: ./User_Management_service
       dockerfile: Dockerfile.userserver
     networks:
       - backend
@@ -52,7 +52,7 @@ services:
     container_name: log-service-api
     image: log-service-api
     build:
-      context: .
+      context: ./Log_Management_service
       dockerfile: Dockerfile.logserver
     networks:
       - backend
@@ -70,7 +70,7 @@ services:
     container_name: model-service-api
     image: model-service-api
     build:
-      context: .
+      context: ./Model_Management_service
       dockerfile: Dockerfile.modelserver
     networks:
       - backend
@@ -84,6 +84,7 @@ services:
     image: track-and-count-service-api
     build:
       context: ./Track_and_Count_System
+      dockerfile: Dockerfile
     networks:
       - backend
     ports:

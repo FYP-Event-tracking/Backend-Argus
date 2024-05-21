@@ -6,11 +6,11 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY Track_and_Count_System/requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY Track_and_Count_System/ .
 
 EXPOSE 8006
 
