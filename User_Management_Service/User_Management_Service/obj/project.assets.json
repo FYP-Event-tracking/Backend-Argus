@@ -4528,11 +4528,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\User_Management_Service-ArgusBackend\\User_Management_Service-ArgusBackend.csproj",
-      "projectName": "User_Management_Service-ArgusBackend",
-      "projectPath": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\User_Management_Service-ArgusBackend\\User_Management_Service-ArgusBackend.csproj",
+      "projectUniqueName": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\User_Management_Service\\User_Management_Service\\User_Management_Service.csproj",
+      "projectName": "User_Management_Service",
+      "projectPath": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\User_Management_Service\\User_Management_Service\\User_Management_Service.csproj",
       "packagesPath": "C:\\Users\\Manuja Dewmina\\.nuget\\packages\\",
-      "outputPath": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\User_Management_Service-ArgusBackend\\obj\\",
+      "outputPath": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\User_Management_Service\\User_Management_Service\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Manuja Dewmina\\AppData\\Roaming\\NuGet\\NuGet.Config"

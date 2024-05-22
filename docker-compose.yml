@@ -1,9 +1,26 @@
 version: '3.8'
 
 networks:
-  backend:
+  gatewaynet:
+  usernet:
+  lognet:
+  modelnet:
 
 services:
+  api-gateway:
+    container_name: api-gateway
+    image: nginx:latest
+    ports:
+      - "8007:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - gatewaynet
+    depends_on:
+      - user-service-api
+      - log-service-api
+      - model-service-api
+
   userdb-host:
     container_name: userdb-host
     build:
@@ -13,7 +30,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password123
     networks:
-      - backend
+      - usernet
     ports:
       - 8001:1433
 
@@ -26,7 +43,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password123
     networks:
-      - backend
+      - lognet
     ports:
       - 8002:1433
 
@@ -37,9 +54,8 @@ services:
       context: ./User_Management_service
       dockerfile: Dockerfile.userserver
     networks:
-      - backend
-    ports:
-      - 8003:8080
+      - gatewaynet
+      - usernet
     environment: 
       - DB_HOST=userdb-host
       - USER_DB_NAME=userdb
@@ -55,9 +71,8 @@ services:
       context: ./Log_Management_service
       dockerfile: Dockerfile.logserver
     networks:
-      - backend
-    ports:
-      - 8004:8080
+      - gatewaynet
+      - lognet
     environment: 
       - DB_HOST=logdb-host
       - LOG_DB_NAME=logdb
@@ -73,9 +88,8 @@ services:
       context: ./Model_Management_service
       dockerfile: Dockerfile.modelserver
     networks:
-      - backend
-    ports:
-      - 8005:8080
+      - gatewaynet
+      - modelnet
     depends_on:
       - track-and-count-service-api
 
@@ -84,8 +98,6 @@ services:
     image: track-and-count-service-api
     build:
       context: ./Track_and_Count_System
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.tcsystem
     networks:
-      - backend
-    ports:
-      - 8006:8006
+      - modelnet

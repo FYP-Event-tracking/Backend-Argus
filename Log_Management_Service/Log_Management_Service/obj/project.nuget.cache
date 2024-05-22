@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5L91kAavssw=",
+  "dgSpecHash": "1q/lCYxHGBM=",
   "success": true,
-  "projectFilePath": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\Log_Management_Service-ArgusBackend\\Log_Management_Service-ArgusBackend.csproj",
+  "projectFilePath": "D:\\8th Sem\\CO4002 Engineering Project\\Backend\\Backend-Argus\\Log_Management_Service\\Log_Management_Service\\Log_Management_Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Manuja Dewmina\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Manuja Dewmina\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
