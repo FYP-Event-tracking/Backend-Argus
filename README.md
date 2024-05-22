@@ -5,7 +5,7 @@
 
 ## Test
 
-`http://localhost:8002/swagger/index.html`
+- Use given postmen collection
 
 ## Backend architecture diagram
 
