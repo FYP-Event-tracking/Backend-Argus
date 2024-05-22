@@ -1,33 +1,103 @@
 version: '3.8'
 
 networks:
-  backend:
+  gatewaynet:
+  usernet:
+  lognet:
+  modelnet:
 
 services:
-  argusdb:
-    container_name: argus-db
+  api-gateway:
+    container_name: api-gateway
+    image: nginx:latest
+    ports:
+      - "8007:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - gatewaynet
+    depends_on:
+      - user-service-api
+      - log-service-api
+      - model-service-api
+
+  userdb-host:
+    container_name: userdb-host
     build:
-      context: .
-      dockerfile: Dockerfile.sqlserver
+      context: ./User_Management_service
+      dockerfile: Dockerfile.user.sqlserver
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password123
     networks:
-      - backend
+      - usernet
     ports:
       - 8001:1433
 
-  userapi:
-    container_name: user-api
-    image: user-api
+  logdb-host:
+    container_name: logdb-host
     build:
-      context: .
+      context: ./Log_Management_service
+      dockerfile: Dockerfile.log.sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123
     networks:
-      - backend
+      - lognet
     ports:
-      - 8002:8080
+      - 8002:1433
+
+  user-service-api:
+    container_name: user-service-api
+    image: user-service-api
+    build:
+      context: ./User_Management_service
+      dockerfile: Dockerfile.userserver
+    networks:
+      - gatewaynet
+      - usernet
     environment: 
-      - DB_HOST=argusdb
+      - DB_HOST=userdb-host
       - USER_DB_NAME=userdb
+      - DB_SA_PASSWORD=Password123
+    depends_on:
+      - track-and-count-service-api
+      - userdb-host
+    
+  log-service-api:
+    container_name: log-service-api
+    image: log-service-api
+    build:
+      context: ./Log_Management_service
+      dockerfile: Dockerfile.logserver
+    networks:
+      - gatewaynet
+      - lognet
+    environment: 
+      - DB_HOST=logdb-host
       - LOG_DB_NAME=logdb
       - DB_SA_PASSWORD=Password123
+    depends_on:
+      - track-and-count-service-api
+      - logdb-host
+
+  model-service-api:
+    container_name: model-service-api
+    image: model-service-api
+    build:
+      context: ./Model_Management_service
+      dockerfile: Dockerfile.modelserver
+    networks:
+      - gatewaynet
+      - modelnet
+    depends_on:
+      - track-and-count-service-api
+
+  track-and-count-service-api:
+    container_name: track-and-count-service-api
+    image: track-and-count-service-api
+    build:
+      context: ./Track_and_Count_System
+      dockerfile: Dockerfile.tcsystem
+    networks:
+      - modelnet
