@@ -15,3 +15,9 @@ CREATE TABLE userdata (
 );
 GO
 
+CREATE TABLE userlogin (
+    userId NVARCHAR(191) PRIMARY KEY,
+    userType NVARCHAR(191) NOT NULL,
+    userPassword NVARCHAR(191) NOT NULL,
+);
+GO
