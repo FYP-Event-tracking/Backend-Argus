@@ -22,17 +22,6 @@ namespace UserService_ArgusBackend.Controllers
             return _userDbContext.Users;
         }
 
-        [HttpGet("username/{userName}")]
-        public async Task<ActionResult<User>> GetByUserName(string userName)
-        {
-            var user = await _userDbContext.Users.FirstOrDefaultAsync(u => u.UserName == userName);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return user;
-        }
-
         [HttpGet("userid/{userId}")]
         public async Task<ActionResult<User>> GetById(string userId)
         {

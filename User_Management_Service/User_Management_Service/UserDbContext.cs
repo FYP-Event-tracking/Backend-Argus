@@ -31,4 +31,31 @@ namespace UserService_ArgusBackend
         }
         public DbSet<User> Users { get; set; }
     }
+
+    public class UserLoginDbContext : DbContext
+    {
+        public UserLoginDbContext(DbContextOptions<UserLoginDbContext> options) : base(options)
+        {
+            try
+                {
+                    var databaseCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+                    if (databaseCreator != null)
+                    {
+                        if (!databaseCreator.CanConnect())
+                        {
+                            databaseCreator.Create();
+                        }
+                        if (!databaseCreator.HasTables())
+                        {
+                            databaseCreator.CreateTables();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+        }
+        public DbSet<UserLogin> UserLogin { get; set; }
+    }
 }

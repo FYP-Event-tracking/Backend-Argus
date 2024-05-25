@@ -15,6 +15,7 @@ var userDbName = Environment.GetEnvironmentVariable("USER_DB_NAME");
 var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 var userConnectionString = $"Data Source={dbHost};Initial Catalog={userDbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true;";
 builder.Services.AddDbContext<UserDbContext>(options => options.UseSqlServer(userConnectionString));
+builder.Services.AddDbContext<UserLoginDbContext>(options => options.UseSqlServer(userConnectionString));
 
 var app = builder.Build();
 
