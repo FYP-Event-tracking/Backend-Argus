@@ -260,13 +260,13 @@
 			"name": "Log Service",
 			"item": [
 				{
-					"name": "Log reate",
+					"name": "Log Create",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"logId\": \"10\",\r\n  \"boxId\": \"string\",\r\n  \"itemType\": \"string\",\r\n  \"userId\": \"string\",\r\n  \"totalCount\": 0,\r\n  \"startTime\": \"2024-05-22T11:04:17.431Z\",\r\n  \"endTime\": \"2024-05-22T11:04:17.431Z\",\r\n  \"fullLogFile\": \"string\"\r\n}",
+							"raw": "{\r\n  \"logId\": \"5\",\r\n  \"boxId\": \"102\",\r\n  \"itemType\": \"203\",\r\n  \"userId\": \"300\",\r\n  \"totalCount\": 0,\r\n  \"startTime\": \"2024-05-22T11:04:17\",\r\n  \"endTime\": \"2024-05-22T11:04:17\",\r\n  \"fullLogFile\": \"string\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -284,6 +284,142 @@
 								"log",
 								"api",
 								"Log"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gell All Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8007/log/api/Log",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"log",
+								"api",
+								"Log"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Log - logId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8007/log/api/Log/logid/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"log",
+								"api",
+								"Log",
+								"logid",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Log - boxId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8007/log/api/Log/boxid/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"log",
+								"api",
+								"Log",
+								"boxid",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logs - itemType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8007/log/api/Log/itemtype/200",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"log",
+								"api",
+								"Log",
+								"itemtype",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logs - userid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8007/log/api/Log/userid/300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"log",
+								"api",
+								"Log",
+								"userid",
+								"300"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logs - date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8007/log/api/Log/date/2024-05-23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8007",
+							"path": [
+								"log",
+								"api",
+								"Log",
+								"date",
+								"2024-05-23"
 							]
 						}
 					},
