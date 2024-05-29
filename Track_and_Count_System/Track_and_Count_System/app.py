@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
+import datetime
+import logging
 # import numpy as np
 # import supervision as sv
 # from ultralytics import YOLO
@@ -23,6 +25,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
+logging.basicConfig(level=logging.INFO)
 
 # def model_run(SOURCE_VIDEO_PATH, TARGET_VIDEO_PATH):
 #     model = YOLO(os.path.relpath("best.pt"))
@@ -107,6 +110,34 @@ def submit():
         'FullLogFile': "dwadawda"
     }
     return jsonify(response)
+
+@app.route('/videofeed', methods=['POST'])
+def video_feed():
+    logId = request.form.get('LogId')
+    boxId = request.form.get('BoxId')
+    itemType = request.form.get('ItemType')
+    userId = request.form.get('UserId')
+    startTime = request.form.get('StartTime')
+    
+    if 'frame' not in request.files:
+        return jsonify({'error': 'No frame part'}), 400
+
+    frame = request.files['frame'].read()
+
+    # Get the current timestamp
+    current_time = datetime.datetime.now().isoformat()
+    logging.info(f"Frame received at {current_time}")
+
+    # Print metadata (for demonstration)
+    logging.info(f"LogId: {logId}, BoxId: {boxId}, ItemType: {itemType}, UserId: {userId}, StartTime: {startTime}")
+
+    # Save the frame if needed (optional)
+    # frame_filename = os.path.join("frames", f"frame_{current_time}.jpg")
+    # with open(frame_filename, "wb") as f:
+    #     f.write(frame)
+
+    return jsonify({'status': 'Frame received', 'timestamp': current_time}), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8006)

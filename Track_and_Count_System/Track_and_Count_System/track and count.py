@@ -1,13 +1,13 @@
 from flask import Flask, request,Response
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
-import cv2
-import threading
-import time
-import numpy as np
-import supervision as sv
-from ultralytics import YOLO
-import os
+# import cv2
+# import threading
+# import time
+# import numpy as np
+# import supervision as sv
+# from ultralytics import YOLO
+# import os
 
 app = Flask(__name__)
 CORS(app)

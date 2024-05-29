@@ -101,3 +101,5 @@ services:
       dockerfile: Dockerfile.tcsystem
     networks:
       - modelnet
+    ports:
+      - 8006:8006
