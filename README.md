@@ -9,4 +9,4 @@
 
 ## Backend architecture diagram
 
-![ArgusBackend drawio](https://github.com/ManujaDewmina/Backend-Argus/assets/92631934/9cd706cf-f633-4389-8a33-4da58375be28)
+![ArgusBackend drawio](https://github.com/FYP-Event-tracking/Backend-Argus/assets/92631934/678fb67c-d05b-4229-9c65-91e7227520b9)
