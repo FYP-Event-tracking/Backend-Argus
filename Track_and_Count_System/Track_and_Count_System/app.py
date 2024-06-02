@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit
 import datetime
 import logging
 # import numpy as np
@@ -11,21 +11,47 @@ import logging
 
 app = Flask(__name__)
 CORS(app) 
-
-SWAGGER_URL = '/swagger'  
-API_URL = '/static/swagger.json' 
-
-swaggerui_blueprint = get_swaggerui_blueprint(
-    SWAGGER_URL,  
-    API_URL,
-    config={  
-        'app_name': "Track and Count System"
-    }
-)
-
-app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
 
 logging.basicConfig(level=logging.INFO)
+
+# Handle WebSocket connections
+@socketio.on('connect')
+def handle_connect():
+    logging.info('Client connected')
+    emit('status', {'status': 'Connected'})
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    logging.info('Client disconnected')
+    emit('status', {'status': 'Disconnected'})
+
+@socketio.on('videostream')
+def handle_video_stream(data):
+    logId = data.get('LogId')
+    boxId = data.get('BoxId')
+    itemType = data.get('ItemType')
+    userId = data.get('UserId')
+    startTime = data.get('StartTime')
+    frame = data.get('frame')
+
+    if frame is None:
+        emit('error', {'error': 'No frame part'})
+        return
+
+    current_time = datetime.datetime.now().isoformat()
+    logging.info(f"Frame received at {current_time}")
+
+    logging.info(f"LogId: {logId}, BoxId: {boxId}, ItemType: {itemType}, UserId: {userId}, StartTime: {startTime}")
+
+    # Optionally, save the frame
+    # frame_filename = os.path.join("frames", f"frame_{current_time}.jpg")
+    # with open(frame_filename, "wb") as f:
+    #     f.write(frame)
+
+    emit('status', {'status': 'Frame received', 'timestamp': current_time})
+
 
 # def model_run(SOURCE_VIDEO_PATH, TARGET_VIDEO_PATH):
 #     model = YOLO(os.path.relpath("best.pt"))
@@ -83,61 +109,60 @@ logging.basicConfig(level=logging.INFO)
 
 #     return in_count, out_count
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    data = request.get_json()
+# @app.route('/submit', methods=['POST'])
+# def submit():
+#     data = request.get_json()
 
-    LogId = data.get('LogId')
-    BoxId = data.get('BoxId')
-    ItemType = data.get('ItemType')
-    UserId = data.get('UserId')
-    StartTime = data.get('StartTime')
+#     LogId = data.get('LogId')
+#     BoxId = data.get('BoxId')
+#     ItemType = data.get('ItemType')
+#     UserId = data.get('UserId')
+#     StartTime = data.get('StartTime')
 
-    # in_count, out_count = model_run("source.mp4", "target.mp4")
+#     # in_count, out_count = model_run("source.mp4", "target.mp4")
 
 
-    if not LogId or not BoxId or not ItemType or not UserId or not StartTime:
-        return jsonify({'error': 'Incomplete Request'}), 400
+#     if not LogId or not BoxId or not ItemType or not UserId or not StartTime:
+#         return jsonify({'error': 'Incomplete Request'}), 400
 
-    response = {
-        'LogId': LogId,
-        'BoxId': BoxId,
-        'ItemType': ItemType,
-        'UserId': UserId,
-        'TotalCount': 4,  # Assuming totalCount is always 4 for now
-        'StartTime': StartTime,
-        'EndTime': StartTime,
-        'FullLogFile': "dwadawda"
-    }
-    return jsonify(response)
+#     response = {
+#         'LogId': LogId,
+#         'BoxId': BoxId,
+#         'ItemType': ItemType,
+#         'UserId': UserId,
+#         'TotalCount': 4,  # Assuming totalCount is always 4 for now
+#         'StartTime': StartTime,
+#         'EndTime': StartTime,
+#         'FullLogFile': "dwadawda"
+#     }
+#     return jsonify(response)
 
-@app.route('/videofeed', methods=['POST'])
-def video_feed():
-    logId = request.form.get('LogId')
-    boxId = request.form.get('BoxId')
-    itemType = request.form.get('ItemType')
-    userId = request.form.get('UserId')
-    startTime = request.form.get('StartTime')
+# @app.route('TCSystem/videostream', methods=['POST'])
+# def video_feed():
+#     logId = request.form.get('LogId')
+#     boxId = request.form.get('BoxId')
+#     itemType = request.form.get('ItemType')
+#     userId = request.form.get('UserId')
+#     startTime = request.form.get('StartTime')
     
-    if 'frame' not in request.files:
-        return jsonify({'error': 'No frame part'}), 400
+#     if 'frame' not in request.files:
+#         return jsonify({'error': 'No frame part'}), 400
 
-    frame = request.files['frame'].read()
+#     frame = request.files['frame'].read()
 
-    # Get the current timestamp
-    current_time = datetime.datetime.now().isoformat()
-    logging.info(f"Frame received at {current_time}")
+#     current_time = datetime.datetime.now().isoformat()
+#     logging.info(f"Frame received at {current_time}")
 
-    # Print metadata (for demonstration)
-    logging.info(f"LogId: {logId}, BoxId: {boxId}, ItemType: {itemType}, UserId: {userId}, StartTime: {startTime}")
+#     logging.info(f"LogId: {logId}, BoxId: {boxId}, ItemType: {itemType}, UserId: {userId}, StartTime: {startTime}")
 
-    # Save the frame if needed (optional)
-    # frame_filename = os.path.join("frames", f"frame_{current_time}.jpg")
-    # with open(frame_filename, "wb") as f:
-    #     f.write(frame)
+#     # Save the frame
+#     # frame_filename = os.path.join("frames", f"frame_{current_time}.jpg")
+#     # with open(frame_filename, "wb") as f:
+#     #     f.write(frame)
 
-    return jsonify({'status': 'Frame received', 'timestamp': current_time}), 200
+#     return jsonify({'status': 'Frame received', 'timestamp': current_time}), 200
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8006)
+    socketio.run(app, host='0.0.0.0', port=8006, allow_unsafe_werkzeug=True)
+

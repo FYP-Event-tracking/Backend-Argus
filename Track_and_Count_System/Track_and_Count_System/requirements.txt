@@ -1,6 +1,6 @@
 Flask==3.0.3
 flask-cors
-flask-swagger-ui
+Flask-SocketIO==4.3.0
 # numpy==1.26.1
 # pandas==2.1.1
 # supervision==0.3.0
