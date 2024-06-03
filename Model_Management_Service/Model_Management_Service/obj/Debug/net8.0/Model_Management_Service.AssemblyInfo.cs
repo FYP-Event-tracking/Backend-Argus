@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Model_Management_Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b437bcf0fafb1be591a4d174a5ef7b1c1011ff7b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3191f1725d552ad1f1889d33849f580a14c70013")]
 [assembly: System.Reflection.AssemblyProductAttribute("Model_Management_Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Model_Management_Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
