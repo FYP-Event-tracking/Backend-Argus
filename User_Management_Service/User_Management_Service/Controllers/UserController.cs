@@ -16,12 +16,6 @@ namespace UserService_ArgusBackend.Controllers
             _userDbContext = userDbContext;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<User>> GetUsers()
-        {
-            return _userDbContext.Users;
-        }
-
         [HttpGet("userid/{userId}")]
         public async Task<ActionResult<User>> GetById(string userId)
         {
