@@ -1,45 +1,50 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit
+import asyncio
+import websockets
 import datetime
 import logging
 
 app = Flask(__name__)
 CORS(app) 
-socketio = SocketIO(app)
 
 logging.basicConfig(level=logging.INFO)
 
-@socketio.on('connect')
-def handle_connect():
-    logging.info('Client connected')
-    emit('status', {'status': 'Connected'})
+clients = set()
 
-@socketio.on('disconnect')
-def handle_disconnect():
-    logging.info('Client disconnected')
-    emit('status', {'status': 'Disconnected'})
+async def handler(websocket, path):
+    clients.add(websocket)
+    try:
+        while True:
+            data = await websocket.recv()
+            log_received_data(data) 
+            reply = f"Data received as: {data}!"
+            await websocket.send(reply)
+    except websockets.ConnectionClosed:
+        clients.remove(websocket)
 
-@socketio.on('videostream')
-def handle_video_stream(data):
-    logId = data.get('LogId')
-    boxId = data.get('BoxId')
-    itemType = data.get('ItemType')
-    userId = data.get('UserId')
-    startTime = data.get('StartTime')
-    frame = data.get('frame')
+def log_received_data(data):
+    log_id = None
+    box_id = None
+    item_type = None
+    user_id = None
+    start_time = None
+    
+    data_lines = data.decode("utf-8").split("\n")
+    for line in data_lines:
+        if line.startswith("LogId:"):
+            log_id = line.split(":")[1]
+        elif line.startswith("BoxId:"):
+            box_id = line.split(":")[1]
+        elif line.startswith("ItemType:"):
+            item_type = line.split(":")[1]
+        elif line.startswith("UserId:"):
+            user_id = line.split(":")[1]
+        elif line.startswith("StartTime:"):
+            start_time = line.split(":")[1]
+        logging.info(f"LogId: {log_id}, BoxId: {box_id}, ItemType: {item_type}, UserId: {user_id}, StartTime: {start_time}")
 
-    if frame is None:
-        emit('error', {'error': 'No frame part'})
-        return
-
-    current_time = datetime.datetime.now().isoformat()
-    logging.info(f"Frame received at {current_time}")
-
-    logging.info(f"LogId: {logId}, BoxId: {boxId}, ItemType: {itemType}, UserId: {userId}, StartTime: {startTime}")
-
-    emit('status', {'status': 'Frame received', 'timestamp': current_time})
-
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8006, allow_unsafe_werkzeug=True)
-
+if __name__ == "__main__":
+    start_server = websockets.serve(handler, "localhost", 8000)
+    asyncio.get_event_loop().run_until_complete(start_server)
+    asyncio.get_event_loop().run_forever()
