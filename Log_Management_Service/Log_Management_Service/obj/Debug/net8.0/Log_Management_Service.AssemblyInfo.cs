@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Log_Management_Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c23e712f887343a1080ce8b1647d8f80a65f8ff8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8297c24b56600852b004fdad23ab1829a215bc1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Log_Management_Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Log_Management_Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
